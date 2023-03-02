@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 
 struct Offsets
 {
@@ -10,6 +9,9 @@ struct Offsets
 	uint64_t kernel_memcmp;
 	uint64_t kernel_memcpy;
 	uint64_t kernel_memset;
+	uint64_t kprintf;
+
+	uint64_t allproc;
 
 	Offsets(int firmware)
 	{
@@ -27,6 +29,8 @@ struct Offsets
 			kernel_memcmp = 0x50AC0;
 			kernel_memcpy = 0x1EA530;
 			kernel_memset = 0x3205C0;
+			allproc = 0x2382FF8;
+			kprintf = 0x436040;
 			break;
 
 		case 0x672:
@@ -37,6 +41,8 @@ struct Offsets
 			kernel_memcmp = 0x207E40;
 			kernel_memcpy = 0x3C15B0;
 			kernel_memset = 0x1687D0;
+			allproc = 0x22BBE80;
+			kprintf = 0x123280;
 			break;
 
 		case 0x702:
@@ -47,6 +53,8 @@ struct Offsets
 			kernel_memcmp = 0x207500;
 			kernel_memcpy = 0x2F040;
 			kernel_memset = 0x2DFC20;
+			allproc = 0x0;
+			kprintf = 0x0;
 			break;
 
 		case 0x755:
@@ -57,6 +65,8 @@ struct Offsets
 			kernel_memcmp = 0x31D250;
 			kernel_memcpy = 0x28F800;
 			kernel_memset = 0x8D6F0;
+			allproc = 0x0;
+			kprintf = 0x0;
 			break;
 
 		case 0x900:
@@ -67,9 +77,11 @@ struct Offsets
 			kernel_memcmp = 0x271E20;
 			kernel_memcpy = 0x2714B0;
 			kernel_memset = 0x1496C0;
+			allproc = 0x01B946E0;
+			kprintf = 0x000B7A30;
 			break;
 		}
 	}
 };
 
-extern std::shared_ptr<OffsetTable> OffsetTable;
+extern std::shared_ptr<Offsets> OffsetTable;

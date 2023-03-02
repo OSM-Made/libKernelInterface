@@ -1,3 +1,4 @@
+#include "Common.h"
 #include "Utilities.h"
 #include <cstdarg>
 #include <stdlib.h>
@@ -16,4 +17,9 @@ void klog(const char* fmt, ...)
 	va_end(args);
 
 	sceKernelDebugOutText(0, Buffer);
+}
+
+uint64_t GetKernelBase()
+{
+	return kernelRdmsr(0xC0000082) - OffsetTable->Xfast_syscall;
 }

@@ -1,4 +1,6 @@
-#include <stdio.h>
+#include "Common.h"
+#include "Offsets.h"
+#include <KernelExt.h>
 
 extern "C"
 {
@@ -10,7 +12,7 @@ extern "C"
         firmware = firmware >> 16;
 
         // Set the offsets needed for the kernel loader.
-        offsetTable = std::make_shared<OffsetTable>(firmware);
+        OffsetTable = std::make_shared<Offsets>(firmware);
 
         return 0;
     }
