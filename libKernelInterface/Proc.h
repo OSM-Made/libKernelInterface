@@ -3,10 +3,17 @@
 namespace Kernel
 {
 	template <typename T>
-	struct LinkedDef
+	struct ListEntry
 	{
 		T* next;
 		T* prev;
+	};
+
+	template <typename T>
+	struct TailQueue
+	{
+		T* first;
+		T* last;
 	};
 
 	struct Thread
@@ -37,8 +44,8 @@ namespace Kernel
 
 	struct Proc
 	{
-		LinkedDef<Proc> ProcList;		// 0x00
-		LinkedDef<Thread> ThreadList;	// 0x10
+		ListEntry<Proc> ProcList;		// 0x00
+		TailQueue<Thread> ThreadList;	// 0x10
 		char _0x20[0x88];
 		int Flag;						// 0xA8
 		int State;						// 0xAC
@@ -55,4 +62,5 @@ namespace Kernel
 	static_assert(sizeof(Proc) == 0xAB8, "Proc struct must be size 0xAB8");
 
 	Proc* GetProcByPid(int pid);
+	bool ReadWriteProcessMemory(Proc* proc, void* addr, void* data, uint32_t len, bool write);
 }

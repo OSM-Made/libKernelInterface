@@ -7,4 +7,7 @@ namespace Kernel
 	{
 		((void(*)(const char* fmt, ...))(GetKernelBase() + OffsetTable->kprintf))(fmt, arg...);
 	}
+
+	void hexdump(void* ptr, int buflen);
+	void memcpy(void* dest, const void* src, size_t len);
 }

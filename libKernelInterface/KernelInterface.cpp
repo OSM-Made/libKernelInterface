@@ -1,23 +1,40 @@
 #include "Common.h"
+#include "KernelInterface.h"
 #include "Proc.h"
 #include "Misc.h"
 
-int TestKernel(Kernel::Thread* td, void* args)
+struct sysReadWriteMemoryArgs
 {
-	Kernel::printf("Hello World\n");
+	void* Syscall;
+	int pid;
+	void* addr;
+	void* data;
+	size_t len;
+};
 
-	auto proc = Kernel::GetProcByPid(0);
-	Kernel::printf("Name: %s\n", proc->Name);
+int SysWriteMemory(Kernel::Thread* td, sysReadWriteMemoryArgs* args)
+{
+	auto proc = Kernel::GetProcByPid(args->pid);
+	if (proc && Kernel::ReadWriteProcessMemory(proc, args->addr, args->data, args->len, true))
+	{
+		return 1;
+	}
 
 	return 0;
 }
 
-void Test()
+int SysReadMemory(Kernel::Thread* td, sysReadWriteMemoryArgs* args)
 {
-	syscall(11, TestKernel);
+	auto proc = Kernel::GetProcByPid(args->pid);
+	if (proc && Kernel::ReadWriteProcessMemory(proc, args->addr, args->data, args->len, false))
+	{
+		return 1;
+	}
+
+	return 0;
 }
 
-void WriteMemory(int pid, void* addr, void* data)
+bool ReadWriteMemory(int pid, void* addr, void* data, size_t len, bool write)
 {
-
+	return syscall(11, write ? SysWriteMemory : SysReadMemory, pid, addr, data, len) == 1;
 }

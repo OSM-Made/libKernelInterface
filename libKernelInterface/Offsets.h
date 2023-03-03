@@ -12,6 +12,7 @@ struct Offsets
 	uint64_t kprintf;
 
 	uint64_t allproc;
+	uint64_t proc_rwmem;
 
 	Offsets(int firmware)
 	{
@@ -31,6 +32,7 @@ struct Offsets
 			kernel_memset = 0x3205C0;
 			allproc = 0x2382FF8;
 			kprintf = 0x436040;
+			proc_rwmem = 0x30D150;
 			break;
 
 		case 0x672:
@@ -43,6 +45,7 @@ struct Offsets
 			kernel_memset = 0x1687D0;
 			allproc = 0x22BBE80;
 			kprintf = 0x123280;
+			proc_rwmem = 0x10EE10;
 			break;
 
 		case 0x702:
@@ -55,6 +58,7 @@ struct Offsets
 			kernel_memset = 0x2DFC20;
 			allproc = 0x0;
 			kprintf = 0x0;
+			proc_rwmem = 0x0;
 			break;
 
 		case 0x755:
@@ -67,6 +71,7 @@ struct Offsets
 			kernel_memset = 0x8D6F0;
 			allproc = 0x0;
 			kprintf = 0x0;
+			proc_rwmem = 0x0;
 			break;
 
 		case 0x900:
@@ -79,6 +84,7 @@ struct Offsets
 			kernel_memset = 0x1496C0;
 			allproc = 0x01B946E0;
 			kprintf = 0x000B7A30;
+			proc_rwmem = 0x0041EB00;
 			break;
 		}
 	}

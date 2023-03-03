@@ -6,4 +6,4 @@
 #define PRX_INTERFACE __declspec(dllimport)
 #endif
 
-PRX_INTERFACE void Test();
+PRX_INTERFACE bool ReadWriteMemory(int pid, void* addr, void* data, size_t len, bool write);
