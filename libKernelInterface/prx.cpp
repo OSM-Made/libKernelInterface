@@ -1,5 +1,6 @@
 #include "Common.h"
 #include "Offsets.h"
+#include "Patches.h"
 #include <KernelExt.h>
 
 extern "C"
@@ -13,6 +14,8 @@ extern "C"
 
         // Set the offsets needed for the kernel loader.
         OffsetTable = std::make_shared<Offsets>(firmware);
+
+        ApplyPatches(firmware);
 
         return 0;
     }

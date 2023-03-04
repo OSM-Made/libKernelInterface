@@ -21,6 +21,12 @@
     <Filter Include="Header Files\Kernel">
       <UniqueIdentifier>{e8e19155-036b-4912-955b-b9473cd15da9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Patches">
+      <UniqueIdentifier>{1e4eec28-59db-4eb0-91eb-ea70e7b8a6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Patches">
+      <UniqueIdentifier>{aa8c0ccb-c260-4f26-b3fa-b32e8d5d6acb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="prx.cpp">
@@ -40,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="Misc.cpp">
       <Filter>Source Files\Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches.cpp">
+      <Filter>Source Files\Patches</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="Misc.h">
       <Filter>Header Files\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches.h">
+      <Filter>Header Files\Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

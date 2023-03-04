@@ -21,25 +21,29 @@ namespace Kernel
 
 	};
 
-	struct dynlib
+	struct dynlib_obj
 	{
-		struct dynlib* dynlib_next;		//0x00
-		const char* ModulePath;			//0x08
+		dynlib_obj* next;				// 0x00
+		const char* Path;				// 0x08
 		char _0x010[0x18];
-		int ModuleHandle;				//0x28
-		char _0x02C[0x4];
-		uint64_t codeBase;				//0x30
-		char _0x038[0x8];
-		unsigned int codeSize;			//0x40
-		char _0x044[0x4];
-		uint64_t dataBase;				//0x48
-		unsigned int dataSize;			//0x50
-		char _0x054[0xAC];
+		uint64_t Handle;				// 0x28
+		uint64_t MapBase;				// 0x30
+		size_t MapSize;					// 0x38
+		size_t TextSize;				// 0x40
+		uint64_t DataBase;				// 0x48
+		size_t dataSize;				// 0x50
+		char _0x058[0x10];
+		size_t vaddr_base;				// 0x68
+		uint64_t realloc_base;			// 0x70
+		uint64_t entry;					// 0x78
+		char _0x60[0xA0];
 	}; //Size 0x100
 
-	struct dynlibptr
+	struct dynlib
 	{
-		struct dynlib* p_dynlib;
+		dynlib_obj* objs;				// 0x00
+		char _0x08[0x20];
+		uint32_t ModuleCount;			// 0x28
 	};
 
 	struct Proc
@@ -51,7 +55,7 @@ namespace Kernel
 		int State;						// 0xAC
 		int pid;						// 0xB0
 		char _0xB4[0x28C];
-		dynlibptr* p_dynlibptr;			// 0x340
+		dynlib* DynLib;					// 0x340
 		char _0x348[0x48];
 		char TitleId[0x10];				// 0x390
 		char _0x3A0[0xAC];
