@@ -15,6 +15,11 @@ namespace Kernel
 		T* first;
 		T* last;
 	};
+
+	struct sx 
+	{
+		char _0x00[0x20];
+	}; // 0x20
 	
 	struct dynlib_obj
 	{
@@ -39,6 +44,8 @@ namespace Kernel
 		dynlib_obj* objs;				// 0x00
 		char _0x08[0x20];
 		uint32_t ModuleCount;			// 0x28
+		char _0x02C[0x44];
+		sx bind_lock;					// 0x70
 	};
 
 	struct Thread;
@@ -69,5 +76,5 @@ namespace Kernel
 
 
 	Proc* GetProcByPid(int pid);
-	bool ReadWriteProcessMemory(Proc* proc, void* addr, void* data, uint32_t len, bool write);
+	bool ReadWriteProcessMemory(Thread* td, Proc* proc, void* addr, void* data, uint32_t len, bool write);
 }

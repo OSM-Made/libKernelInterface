@@ -46,7 +46,7 @@ namespace Kernel
 		return nullptr;
 	}
 
-	bool ReadWriteProcessMemory(Proc* proc, void* addr, void* data, uint32_t len, bool write)
+	bool ReadWriteProcessMemory(Thread* td, Proc* proc, void* addr, void* data, uint32_t len, bool write)
 	{
 		if (proc == nullptr)
 		{
@@ -79,7 +79,7 @@ namespace Kernel
 		Uio.uio_resid = (uint64_t)len;
 		Uio.uio_segflg = UIO_SYSSPACE;
 		Uio.uio_rw = write ? UIO_WRITE : UIO_READ;
-		Uio.uio_td = proc->ThreadList.first; 
+		Uio.uio_td = td; 
 
 		auto res = ((int(*)(...))(GetKernelBase() + OffsetTable->proc_rwmem))(proc, &Uio);
 

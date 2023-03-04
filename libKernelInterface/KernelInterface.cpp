@@ -16,7 +16,7 @@ struct sysReadWriteMemoryArgs
 int SysWriteMemory(Kernel::Thread* td, sysReadWriteMemoryArgs* args)
 {
 	auto proc = Kernel::GetProcByPid(args->pid);
-	if (proc && Kernel::ReadWriteProcessMemory(proc, args->addr, args->data, args->len, true))
+	if (proc && Kernel::ReadWriteProcessMemory(td, proc, args->addr, args->data, args->len, true))
 	{
 		return 1;
 	}
@@ -27,7 +27,7 @@ int SysWriteMemory(Kernel::Thread* td, sysReadWriteMemoryArgs* args)
 int SysReadMemory(Kernel::Thread* td, sysReadWriteMemoryArgs* args)
 {
 	auto proc = Kernel::GetProcByPid(args->pid);
-	if (proc && Kernel::ReadWriteProcessMemory(proc, args->addr, args->data, args->len, false))
+	if (proc && Kernel::ReadWriteProcessMemory(td, proc, args->addr, args->data, args->len, false))
 	{
 		return 1;
 	}
@@ -86,8 +86,8 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 		obj = obj->next;
 	}
 
-	Kernel::ReadWriteProcessMemory(td->td_proc, (void*)args->libOut, (void*)libTemp, sizeof(OrbisLibraryInfo) * libCount, true);
-	Kernel::ReadWriteProcessMemory(td->td_proc, (void*)args->libCount, (void*)&libCount, sizeof(int), true);
+	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libOut, (void*)libTemp, sizeof(OrbisLibraryInfo) * libCount, true);
+	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libCount, (void*)&libCount, sizeof(int), true);
 
 	Kernel::free(libTemp);
 
