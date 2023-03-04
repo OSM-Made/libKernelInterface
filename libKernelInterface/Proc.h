@@ -15,12 +15,7 @@ namespace Kernel
 		T* first;
 		T* last;
 	};
-
-	struct Thread
-	{
-
-	};
-
+	
 	struct dynlib_obj
 	{
 		dynlib_obj* next;				// 0x00
@@ -46,6 +41,7 @@ namespace Kernel
 		uint32_t ModuleCount;			// 0x28
 	};
 
+	struct Thread;
 	struct Proc
 	{
 		ListEntry<Proc> ProcList;		// 0x00
@@ -64,6 +60,13 @@ namespace Kernel
 	};	// 0xAB8
 
 	static_assert(sizeof(Proc) == 0xAB8, "Proc struct must be size 0xAB8");
+
+	struct Thread
+	{
+		char _0x00[0x8];
+		Proc* td_proc;
+	};
+
 
 	Proc* GetProcByPid(int pid);
 	bool ReadWriteProcessMemory(Proc* proc, void* addr, void* data, uint32_t len, bool write);

@@ -29,4 +29,26 @@ namespace Kernel
 	{
 		((void(*)(...))(GetKernelBase() + OffsetTable->kernel_memcpy))(dest, src, len);
 	}
+
+	void strncpy(char* dest, const char* src, size_t len)
+	{
+		((void(*)(...))(GetKernelBase() + OffsetTable->kernel_strncpy))(dest, src, len);
+	}
+
+	void* malloc(size_t size) 
+	{
+		auto kernelBase = GetKernelBase();
+		void* M_TEMP = (void*)(kernelBase + OffsetTable->M_TEMP);
+		return ((void*(*)(...))(kernelBase + OffsetTable->malloc))(size, M_TEMP, 0x0100 | 0x0001);
+	}
+
+	void free(void* addr)
+	{
+		if (addr == nullptr)
+			return;
+
+		auto kernelBase = GetKernelBase();
+		void* M_TEMP = (void*)(kernelBase + OffsetTable->M_TEMP);
+		((void(*)(...))(kernelBase + OffsetTable->free))(addr, M_TEMP);;
+	}
 }

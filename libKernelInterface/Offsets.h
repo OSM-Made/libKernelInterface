@@ -8,8 +8,13 @@ struct Offsets
 	uint64_t kernel_map;
 	uint64_t kernel_memcmp;
 	uint64_t kernel_memcpy;
+	uint64_t kernel_strncpy;
 	uint64_t kernel_memset;
 	uint64_t kprintf;
+
+	uint64_t M_TEMP;
+	uint64_t malloc;
+	uint64_t free;
 
 	uint64_t allproc;
 	uint64_t proc_rwmem;
@@ -29,9 +34,13 @@ struct Offsets
 			kernel_map = 0x1AC60E0;
 			kernel_memcmp = 0x50AC0;
 			kernel_memcpy = 0x1EA530;
+			kernel_strncpy = 0x3C0B0;
 			kernel_memset = 0x3205C0;
 			allproc = 0x2382FF8;
 			kprintf = 0x436040;
+			M_TEMP = 0x14B4110;
+			malloc = 0x10E250;
+			free = 0x10E460;
 			proc_rwmem = 0x30D150;
 			break;
 
@@ -42,9 +51,13 @@ struct Offsets
 			kernel_map = 0x220DFC0;
 			kernel_memcmp = 0x207E40;
 			kernel_memcpy = 0x3C15B0;
+			kernel_strncpy = 0x329010;
 			kernel_memset = 0x1687D0;
 			allproc = 0x22BBE80;
 			kprintf = 0x123280;
+			M_TEMP = 0x1540EB0;
+			malloc = 0xD7A0;
+			free = 0xD9A0;
 			proc_rwmem = 0x10EE10;
 			break;
 
@@ -55,9 +68,13 @@ struct Offsets
 			kernel_map = 0x21C8EE0;
 			kernel_memcmp = 0x207500;
 			kernel_memcpy = 0x2F040;
+			kernel_strncpy = 0x0;
 			kernel_memset = 0x2DFC20;
 			allproc = 0x0;
 			kprintf = 0x0;
+			M_TEMP = 0x0;
+			malloc = 0x0;
+			free = 0x0;
 			proc_rwmem = 0x0;
 			break;
 
@@ -68,9 +85,13 @@ struct Offsets
 			kernel_map = 0x21405B8;
 			kernel_memcmp = 0x31D250;
 			kernel_memcpy = 0x28F800;
+			kernel_strncpy = 0x0;
 			kernel_memset = 0x8D6F0;
 			allproc = 0x0;
 			kprintf = 0x0;
+			M_TEMP = 0x0;
+			malloc = 0x0;
+			free = 0x0;
 			proc_rwmem = 0x0;
 			break;
 
@@ -81,9 +102,13 @@ struct Offsets
 			kernel_map = 0x2268D48;
 			kernel_memcmp = 0x271E20;
 			kernel_memcpy = 0x2714B0;
+			kernel_strncpy = 0x41E380;
 			kernel_memset = 0x1496C0;
 			allproc = 0x01B946E0;
 			kprintf = 0x000B7A30;
+			M_TEMP = 0x015621E0;
+			malloc = 0x00301B20;
+			free = 0x00301CE0;
 			proc_rwmem = 0x0041EB00;
 			break;
 		}

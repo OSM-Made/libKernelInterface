@@ -10,4 +10,7 @@ namespace Kernel
 
 	void hexdump(void* ptr, int buflen);
 	void memcpy(void* dest, const void* src, size_t len);
+	void strncpy(char* dest, const char* src, size_t len);
+	void* malloc(size_t size);
+	void free(void* addr);
 }
