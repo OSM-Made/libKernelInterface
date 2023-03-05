@@ -64,12 +64,23 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 		Kernel::printf("sysGetLibraries(): Failed to get the procs.\n");
 		return -1;
 	}
-	
-	auto libCount = proc->DynLib->ModuleCount;
+
+	// Lock the dynlib.
+	auto lock = &proc->DynLib->bind_lock;
+	sx_xlock_hard(lock, 0);
+
 	Kernel::dynlib_obj* obj = proc->DynLib->objs;
+	auto libCount = proc->DynLib->ModuleCount;
 
+	// Allocate Memory for storage.
 	auto libTemp = (OrbisLibraryInfo*)Kernel::malloc(sizeof(OrbisLibraryInfo) * libCount);
+	if (!libTemp)
+	{
+		Kernel::printf("sysGetLibraries(): Failed to allocate memory for libTemp.\n");
+		return -1;
+	}
 
+	// Get all the modules.
 	for (int i = 0; i < libCount; i++)
 	{
 		if (obj == nullptr)
@@ -86,9 +97,14 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 		obj = obj->next;
 	}
 
+	// Unlock the dynlib.
+	sx_xunlock_hard(lock);
+
+	// Write the data out to userland.
 	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libOut, (void*)libTemp, sizeof(OrbisLibraryInfo) * libCount, true);
 	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libCount, (void*)&libCount, sizeof(int), true);
 
+	// Free our memory.
 	Kernel::free(libTemp);
 
 	return 0;

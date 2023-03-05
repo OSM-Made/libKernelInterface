@@ -13,4 +13,6 @@ namespace Kernel
 	void strncpy(char* dest, const char* src, size_t len);
 	void* malloc(size_t size);
 	void free(void* addr);
+	int sx_xlock_hard(sx* lock, int options);
+	int sx_xunlock_hard(sx* lock);
 }

@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "Proc.h"
 #include "Misc.h"
 
 namespace Kernel
@@ -50,5 +51,15 @@ namespace Kernel
 		auto kernelBase = GetKernelBase();
 		void* M_TEMP = (void*)(kernelBase + OffsetTable->M_TEMP);
 		((void(*)(...))(kernelBase + OffsetTable->free))(addr, M_TEMP);;
+	}
+
+	int sx_xlock_hard(sx* lock, int options)
+	{
+		return ((int(*)(...))(GetKernelBase() + OffsetTable->sx_xlock))(lock, options);
+	}
+
+	int sx_xunlock_hard(sx* lock)
+	{
+		return ((int(*)(...))(GetKernelBase() + OffsetTable->sx_xunlock))(lock);
 	}
 }
