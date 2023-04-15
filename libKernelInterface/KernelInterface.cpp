@@ -3,6 +3,8 @@
 #include "Proc.h"
 #include "Misc.h"
 #include <KernelExt.h>
+#include "Syscall.h"
+#include <libdbg.h>
 
 struct sysReadWriteMemoryArgs
 {
@@ -65,44 +67,35 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 		return -1;
 	}
 
-	// Lock the dynlib.
-	auto lock = &proc->DynLib->bind_lock;
-	sx_xlock_hard(lock, 0);
+	size_t numModules;
+	int handles[256];
+	int res = Kernel::sys_dynlib_get_list(proc->ThreadList.first, handles, 256, &numModules);
 
-	Kernel::dynlib_obj* obj = proc->DynLib->objs;
-	auto libCount = proc->DynLib->ModuleCount;
-
-	// Allocate Memory for storage.
-	auto libTemp = (OrbisLibraryInfo*)Kernel::malloc(sizeof(OrbisLibraryInfo) * libCount);
+	auto libTemp = (OrbisLibraryInfo*)Kernel::malloc(sizeof(OrbisLibraryInfo) * numModules);
 	if (!libTemp)
 	{
 		Kernel::printf("sysGetLibraries(): Failed to allocate memory for libTemp.\n");
 		return -1;
 	}
 
-	// Get all the modules.
-	for (int i = 0; i < libCount; i++)
+	for (int i = 0; i < numModules; i++)
 	{
-		if (obj == nullptr)
-			return 0;
+		SceDbgModuleInfo info;
+		info.size = sizeof(SceDbgModuleInfo);
+		Kernel::sys_dynlib_get_info(proc->ThreadList.first, handles[i], &info);
 
-		libTemp[i].Handle = obj->Handle;
-		Kernel::strncpy(libTemp[i].Path, obj->Path, 256);
-		libTemp[i].MapBase = obj->MapBase;
-		libTemp[i].MapSize = obj->MapSize;
-		libTemp[i].TextSize = obj->TextSize;
-		libTemp[i].DataBase = obj->DataBase;
-		libTemp[i].dataSize = obj->dataSize;
-
-		obj = obj->next;
+		libTemp[i].Handle = handles[i];
+		Kernel::strncpy(libTemp[i].Path, info.name, 256);
+		libTemp[i].MapBase = (uint64_t)info.segmentInfo[0].baseAddr;
+		libTemp[i].MapSize = info.segmentInfo[0].size + info.segmentInfo[1].size;
+		libTemp[i].TextSize = info.segmentInfo[0].size;
+		libTemp[i].DataBase = (uint64_t)info.segmentInfo[1].baseAddr;
+		libTemp[i].dataSize = info.segmentInfo[1].size;
 	}
 
-	// Unlock the dynlib.
-	sx_xunlock_hard(lock);
-
 	// Write the data out to userland.
-	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libOut, (void*)libTemp, sizeof(OrbisLibraryInfo) * libCount, true);
-	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libCount, (void*)&libCount, sizeof(int), true);
+	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libOut, (void*)libTemp, sizeof(OrbisLibraryInfo) * numModules, true);
+	Kernel::ReadWriteProcessMemory(td, td->td_proc, (void*)args->libCount, (void*)&numModules, sizeof(int), true);
 
 	// Free our memory.
 	Kernel::free(libTemp);

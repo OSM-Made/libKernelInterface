@@ -2,6 +2,8 @@
 
 namespace Kernel
 {
+	#define MAXCOMLEN 19
+
 	template <typename T>
 	struct ListEntry
 	{
@@ -71,7 +73,19 @@ namespace Kernel
 	struct Thread
 	{
 		char _0x00[0x8];
-		Proc* td_proc;
+		Proc* td_proc;					// 0x08
+		char _0x10[0x274];
+		char td_name[MAXCOMLEN + 17];	// 0x284
+		char _0x2A8[0xEC];
+		enum {
+			TDS_INACTIVE = 0x0,
+			TDS_INHIBITED,
+			TDS_CAN_RUN,
+			TDS_RUNQ,
+			TDS_RUNNING
+		} td_state;						// 0x390
+		char _0x394[0x4];
+		uint64_t td_retval[2];			// 0x398
 	};
 
 

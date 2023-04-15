@@ -21,6 +21,7 @@ struct Offsets
 
 	uint64_t allproc;
 	uint64_t proc_rwmem;
+	uint64_t sysvec;
 
 	Offsets(int firmware)
 	{
@@ -39,7 +40,7 @@ struct Offsets
 			kernel_memcpy = 0x1EA530;
 			kernel_strncpy = 0x3C0B0;
 			kernel_memset = 0x3205C0;
-			
+
 			kprintf = 0x436040;
 
 			sx_xlock = 0x000F5C30;
@@ -51,6 +52,7 @@ struct Offsets
 
 			allproc = 0x2382FF8;
 			proc_rwmem = 0x30D150;
+			sysvec = 0x19BBCD0;
 			break;
 
 		case 0x672:
@@ -73,6 +75,7 @@ struct Offsets
 
 			allproc = 0x22BBE80;
 			proc_rwmem = 0x10EE10;
+			sysvec = 0x1A8A398;
 			break;
 
 		case 0x702:
@@ -95,6 +98,7 @@ struct Offsets
 
 			allproc = 0x0;
 			proc_rwmem = 0x0;
+			sysvec = 0;
 			break;
 
 		case 0x755:
@@ -117,6 +121,7 @@ struct Offsets
 
 			allproc = 0x0;
 			proc_rwmem = 0x0;
+			sysvec = 0;
 			break;
 
 		case 0x900:
@@ -139,6 +144,7 @@ struct Offsets
 
 			allproc = 0x01B946E0;
 			proc_rwmem = 0x0041EB00;
+			sysvec = 0x01528E30;
 			break;
 		}
 	}

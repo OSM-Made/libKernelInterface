@@ -50,6 +50,9 @@
     <ClCompile Include="Patches.cpp">
       <Filter>Source Files\Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Syscall.cpp">
+      <Filter>Source Files\Kernel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KernelInterface.h">
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="Patches.h">
       <Filter>Header Files\Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Syscall.h">
+      <Filter>Header Files\Kernel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

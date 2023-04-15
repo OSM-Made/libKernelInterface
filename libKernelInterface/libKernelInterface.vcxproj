@@ -59,7 +59,7 @@
     <PostBuildEvent>
       <Command>"C:\Python27\python.exe" $(SolutionDir)\$(ProjectName)\make_fself.py  $(OutputPath)$(ProjectName)$(TargetExt)  $(OutputPath)$(ProjectName).sprx
 del $(OutputPath)$(ProjectName)$(TargetExt)
-echo open 1.1.0.15 2121&gt; temp.txt
+echo open 1.1.0.14 2121&gt; temp.txt
 echo cd "/system/vsh/app/ORBS30000/"&gt;&gt; temp.txt
 echo send $(OutputPath)$(ProjectName).sprx&gt;&gt; temp.txt
 echo quit&gt;&gt; temp.txt
@@ -88,6 +88,7 @@ del temp.txt</Command>
     <ClCompile Include="Patches.cpp" />
     <ClCompile Include="Proc.cpp" />
     <ClCompile Include="prx.cpp" />
+    <ClCompile Include="Syscall.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +99,7 @@ del temp.txt</Command>
     <ClInclude Include="Offsets.h" />
     <ClInclude Include="Patches.h" />
     <ClInclude Include="Proc.h" />
+    <ClInclude Include="Syscall.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
