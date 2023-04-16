@@ -114,3 +114,8 @@ int GetLibraries(int pid, OrbisLibraryInfo* libraries, int maxCount)
 
 	return libCount;
 }
+
+uint64_t mmap(uint64_t addr, size_t len, int prot, int flags, int fd, off_t pos)
+{
+
+}
