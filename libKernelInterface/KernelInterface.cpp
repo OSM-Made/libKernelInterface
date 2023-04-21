@@ -69,7 +69,7 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 
 	size_t numModules;
 	int handles[256];
-	int res = Kernel::sys_dynlib_get_list(proc->ThreadList.first, handles, 256, &numModules);
+	Kernel::sys_dynlib_get_list(proc->ThreadList.first, handles, 256, &numModules);
 
 	auto libTemp = (OrbisLibraryInfo*)Kernel::malloc(sizeof(OrbisLibraryInfo) * numModules);
 	if (!libTemp)
@@ -114,6 +114,17 @@ int GetLibraries(int pid, OrbisLibraryInfo* libraries, int maxCount)
 
 	return libCount;
 }
+
+struct sysMmapArgs
+{
+	void* Syscall;
+	uint64_t addr;
+	size_t len;
+	int prot;
+	int flags;
+	int fd;
+	off_t pos;
+};
 
 uint64_t mmap(uint64_t addr, size_t len, int prot, int flags, int fd, off_t pos)
 {

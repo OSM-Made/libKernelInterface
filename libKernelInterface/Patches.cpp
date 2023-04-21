@@ -66,6 +66,15 @@ int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 		kmem = (uint8_t*)kernelBase + 0x23BD3E;
 		kmem[0] = 0x00;
 
+		// mpage panic
+		kmem = (uint8_t*)kernelBase + 0x884BE;
+		kmem[0] = 0x90;
+		kmem[1] = 0x90;
+		kmem[2] = 0x90;
+		kmem[3] = 0x90;
+		kmem[4] = 0x90;
+		kmem[5] = 0x90;
+
 		break;
 	}
 
