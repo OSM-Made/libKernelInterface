@@ -67,4 +67,36 @@ namespace Kernel
 		// success
 		return td->td_retval[0];
 	}
+
+	struct sys_dynlib_get_info_ex_args
+	{
+		uint64_t handle;
+		uint64_t unk;
+		uint64_t pInfo;
+	};
+
+	int sys_dynlib_get_info_ex(Thread* td, int handle, int unk, dynlib_info_ex* pInfo)
+	{
+		sys_dynlib_get_info_ex_args uap;
+		auto kernelBase = GetKernelBase();
+		sysentvec* sysvec = (sysentvec*)(kernelBase + OffsetTable->sysvec);
+		sysent* sysents = sysvec->sv_table;
+		auto sys_dynlib_get_info_ex = (int(*)(Thread*, sys_dynlib_get_info_ex_args*))sysents[608].sy_call;
+
+		// clear errors
+		td->td_retval[0] = 0;
+
+		// Set up Params
+		uap.handle = handle;
+		uap.unk = unk;
+		uap.pInfo = (uint64_t)pInfo;
+
+		// Call System call
+		auto errorno = sys_dynlib_get_info_ex(td, &uap);
+		if (errorno)
+			return -errorno;
+
+		// success
+		return td->td_retval[0];
+	}
 }

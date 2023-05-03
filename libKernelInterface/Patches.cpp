@@ -56,14 +56,14 @@ int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 		kmem[4] = 0x00;
 
 		// sys_dynlib_get_info gives full module path.
-		kmem = (uint8_t*)kernelBase + 0x23BD33;
+		kmem = (uint8_t*)kernelBase + 0x23C19F;
 		kmem[0] = 0x4C;
 		kmem[1] = 0x89;
-		kmem[2] = 0xF0;
+		kmem[2] = 0xF8;
 		kmem[3] = 0x90;
 		kmem[4] = 0x90;
-
-		kmem = (uint8_t*)kernelBase + 0x23BD3E;
+		
+		kmem = (uint8_t*)kernelBase + 0x23C1AA;
 		kmem[0] = 0x00;
 
 		// mpage panic

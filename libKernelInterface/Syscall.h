@@ -31,6 +31,32 @@ namespace Kernel
 		struct sysent* sv_table;	/* pointer to sysent */
 	};
 
+	struct dynlib_info_ex
+	{
+		size_t size;
+		char name[256];
+		int32_t handle;
+		uint16_t tls_index;
+		uint16_t pad0;
+		uintptr_t tls_init_addr;
+		uint32_t tls_init_size;
+		uint32_t tls_size;
+		uint32_t tls_offset;
+		uint32_t tls_align;
+		uintptr_t init_proc_addr;
+		uintptr_t fini_proc_addr;
+		uint64_t reserved1;
+		uint64_t reserved2;
+		uintptr_t eh_frame_hdr_addr;
+		uintptr_t eh_frame_addr;
+		uint32_t eh_frame_hdr_size;
+		uint32_t eh_frame_size;
+		SceDbgModuleSegmentInfo segmentInfo[4];
+		uint32_t segment_count;
+		uint32_t ref_count;
+	};
+
 	int sys_dynlib_get_list(Thread* td, int* handlesOut, size_t handlesOutCount, size_t* actualCount);
 	int sys_dynlib_get_info(Thread* td, int handle, SceDbgModuleInfo* pInfo);
+	int sys_dynlib_get_info_ex(Thread* td, int handle, int unk, dynlib_info_ex* pInfo);
 }

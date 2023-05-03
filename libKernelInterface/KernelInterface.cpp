@@ -80,9 +80,9 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 
 	for (int i = 0; i < numModules; i++)
 	{
-		SceDbgModuleInfo info;
-		info.size = sizeof(SceDbgModuleInfo);
-		Kernel::sys_dynlib_get_info(proc->ThreadList.first, handles[i], &info);
+		Kernel::dynlib_info_ex info;
+		info.size = sizeof(Kernel::dynlib_info_ex);
+		sys_dynlib_get_info_ex(proc->ThreadList.first, handles[i], 1, &info);
 
 		libTemp[i].Handle = handles[i];
 		Kernel::strncpy(libTemp[i].Path, info.name, 256);
