@@ -60,10 +60,9 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 	}
 
 	auto proc = Kernel::GetProcByPid(args->pid);
-
-	if (proc == 0 || td->td_proc == 0)
+	if (proc == 0)
 	{
-		Kernel::printf("sysGetLibraries(): Failed to get the procs.\n");
+		Kernel::printf("sysGetLibraries(): Failed to get the proc.\n");
 		return -1;
 	}
 

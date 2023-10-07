@@ -1,10 +1,12 @@
 #include "Common.h"
-#include "Utilities.h"
+#include "InternalUtilities.h"
 #include <cstdarg>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <kernelExt.h>
+
+#ifdef LIBRARY_IMPL
 
 void klog(const char* fmt, ...)
 {
@@ -23,3 +25,5 @@ uint64_t GetKernelBase()
 {
 	return kernelRdmsr(0xC0000082) - OffsetTable->Xfast_syscall;
 }
+
+#endif

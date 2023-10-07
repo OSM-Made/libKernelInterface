@@ -3,6 +3,8 @@
 #include "Proc.h"
 #include "Misc.h"
 
+uint64_t KernelBase;
+
 struct PatchesArgs
 {
 	void* syscall;
@@ -12,7 +14,7 @@ struct PatchesArgs
 int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 {
 	int firmware = (int)arg->firmware;
-	auto kernelBase = GetKernelBase();
+	KernelBase = GetKernelBase();
 	uint8_t* kmem;
 
 	cpu_disable_wp();
@@ -29,7 +31,7 @@ int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 
 	case 0x672:
 		// ptrace Patches.
-		kmem = (uint8_t*)kernelBase + 0x0010F879;
+		kmem = (uint8_t*)KernelBase + 0x0010F879;
 		kmem[0] = 0xEB;
 
 		break;
@@ -45,10 +47,10 @@ int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 	case 0x900:
 
 		// ptrace Patches.
-		kmem = (uint8_t*)kernelBase + 0x41F4E5;
+		kmem = (uint8_t*)KernelBase + 0x41F4E5;
 		kmem[0] = 0xEB;
 
-		kmem = (uint8_t*)kernelBase + 0x41F9D1;
+		kmem = (uint8_t*)KernelBase + 0x41F9D1;
 		kmem[0] = 0xE9;
 		kmem[1] = 0x7C;
 		kmem[2] = 0x02;
@@ -56,18 +58,18 @@ int sysApplyPatches(Kernel::Thread* td, PatchesArgs* arg)
 		kmem[4] = 0x00;
 
 		// sys_dynlib_get_info gives full module path.
-		kmem = (uint8_t*)kernelBase + 0x23C19F;
+		kmem = (uint8_t*)KernelBase + 0x23C19F;
 		kmem[0] = 0x4C;
 		kmem[1] = 0x89;
 		kmem[2] = 0xF8;
 		kmem[3] = 0x90;
 		kmem[4] = 0x90;
 		
-		kmem = (uint8_t*)kernelBase + 0x23C1AA;
+		kmem = (uint8_t*)KernelBase + 0x23C1AA;
 		kmem[0] = 0x00;
 
 		// mpage panic
-		kmem = (uint8_t*)kernelBase + 0x884BE;
+		kmem = (uint8_t*)KernelBase + 0x884BE;
 		kmem[0] = 0x90;
 		kmem[1] = 0x90;
 		kmem[2] = 0x90;

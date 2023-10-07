@@ -4,6 +4,6 @@
 #include <cstdint>
 #include <memory>
 
-#include "Utilities.h"
+#include "InternalUtilities.h"
 #include "ASM.h"
 #include "Offsets.h"

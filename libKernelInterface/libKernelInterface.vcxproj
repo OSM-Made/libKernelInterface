@@ -57,11 +57,11 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">--required-files $(SolutionDir)$(ProjectName)\$(IntermediateOutputPath)\ASM.o %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>"C:\Python27\python.exe" $(SolutionDir)\$(ProjectName)\make_fself.py  $(OutputPath)$(ProjectName)$(TargetExt)  $(OutputPath)$(ProjectName).sprx
-del $(OutputPath)$(ProjectName)$(TargetExt)
+      <Command>py -V:3.11 $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).prx  $(OutputPath)$(TargetName).sprx
+
 echo open 1.1.0.14 2121&gt; temp.txt
 echo cd "/system/vsh/app/ORBS30000/"&gt;&gt; temp.txt
-echo send $(OutputPath)$(ProjectName).sprx&gt;&gt; temp.txt
+echo send $(OutputPath)$(TargetName).sprx&gt;&gt; temp.txt
 echo quit&gt;&gt; temp.txt
 ftp -A -s:temp.txt
 del temp.txt</Command>
@@ -71,11 +71,16 @@ del temp.txt</Command>
       <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</GenerateDebugInformation>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)/External/StubMaker/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</MultiProcessorCompilation>
+      <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">32</ProcessorNumber>
     </ClCompile>
     <ClCompile>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NDEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NDEBUG;LIBRARY_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OptimizationLevel Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Level2</OptimizationLevel>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">$(SolutionDir)/External/StubMaker/include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">true</MultiProcessorCompilation>
+      <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">32</ProcessorNumber>
     </ClCompile>
     <PreLinkEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)$(ProjectName)\buildASM.bat $(SolutionDir)$(ProjectName)\ $(SolutionDir)$(ProjectName)\$(IntermediateOutputPath)</Command>
@@ -89,7 +94,7 @@ del temp.txt</Command>
     <ClCompile Include="Proc.cpp" />
     <ClCompile Include="prx.cpp" />
     <ClCompile Include="Syscall.cpp" />
-    <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="InternalUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ASM.h" />
@@ -100,7 +105,7 @@ del temp.txt</Command>
     <ClInclude Include="Patches.h" />
     <ClInclude Include="Proc.h" />
     <ClInclude Include="Syscall.h" />
-    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="InternalUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ASM.s" />

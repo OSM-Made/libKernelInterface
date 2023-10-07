@@ -14,7 +14,7 @@ struct OrbisLibraryInfo
 	size_t MapSize;
 	size_t TextSize;
 	uint64_t DataBase;
-	size_t dataSize;
+	size_t DataSize;
 };
 
 PRX_INTERFACE bool ReadWriteMemory(int pid, void* addr, void* data, size_t len, bool write);

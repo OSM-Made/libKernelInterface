@@ -2,6 +2,9 @@
 #include "Offsets.h"
 #include "Patches.h"
 #include <KernelExt.h>
+#include "Proc.h"
+#include "Misc.h"
+#include <_fs.h>
 
 extern "C"
 {

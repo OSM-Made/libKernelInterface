@@ -38,7 +38,7 @@
     <ClCompile Include="Offsets.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
+    <ClCompile Include="InternalUtilities.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Proc.cpp">
@@ -64,7 +64,7 @@
     <ClInclude Include="Offsets.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
+    <ClInclude Include="InternalUtilities.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="ASM.h">

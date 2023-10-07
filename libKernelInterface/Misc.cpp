@@ -62,4 +62,9 @@ namespace Kernel
 	{
 		return ((int(*)(...))(GetKernelBase() + OffsetTable->sx_xunlock))(lock);
 	}
+
+	int create_thread(Thread* td, uint64_t ctx, void* start_func, void* arg, char* stack_base, size_t stack_size, char* tls_base, long* child_tid, long* parent_tid, uint64_t flags, uint64_t rtp)
+	{
+		return ((int(*)(...))(GetKernelBase() + 0x001ED670))(td, ctx, start_func, arg, stack_base, stack_size, tls_base, child_tid, parent_tid, flags, rtp);
+	}
 }
