@@ -89,7 +89,7 @@ int sysGetLibraries(Kernel::Thread* td, sysGetLibrariesArgs* args)
 		libTemp[i].MapSize = info.segmentInfo[0].size + info.segmentInfo[1].size;
 		libTemp[i].TextSize = info.segmentInfo[0].size;
 		libTemp[i].DataBase = (uint64_t)info.segmentInfo[1].baseAddr;
-		libTemp[i].dataSize = info.segmentInfo[1].size;
+		libTemp[i].DataSize = info.segmentInfo[1].size;
 	}
 
 	// Write the data out to userland.
